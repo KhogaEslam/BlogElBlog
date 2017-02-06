@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import auth
 
 
 # Create your views here.
