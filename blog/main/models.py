@@ -15,7 +15,7 @@ class post(models.Model):
 
     post_title = models.CharField(max_length = 200)
     post_content = models.TextField()
-    post_img=models.ImageField(upload_to="./media/", blank=True)
+    post_img=models.ImageField(upload_to="./static/media/", blank=True)
     post_date=models.DateField(auto_now_add = True)
     post_cat_id=models.ForeignKey(category)
 
