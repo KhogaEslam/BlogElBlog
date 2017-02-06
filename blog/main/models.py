@@ -32,7 +32,7 @@ class comment(models.Model):
     comment_body = models.TextField()
     comment_date=models.DateField(auto_now_add = True)
     comment_user_id=models.ForeignKey(User)
-    reply_comment_id = models.ForeignKey("comment")
+    reply_comment_id = models.ForeignKey('self', null=True, blank=True)
     comment_post_id = models.ForeignKey(post)
 
     def __str__(self):
