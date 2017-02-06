@@ -9,6 +9,11 @@ from django.contrib.auth.models import User
 #Categories table
 class category(models.Model):
     cat_title =models.CharField(max_length= 200)
+    class Meta:
+        verbose_name_plural = 'Categories'
+    def __str__(self):
+        return self.cat_title
+
 
 #Posts table
 class post(models.Model):
@@ -19,6 +24,9 @@ class post(models.Model):
     post_date=models.DateField(auto_now_add = True)
     post_cat_id=models.ForeignKey(category)
 
+    def __str__(self):
+        return self.post_title
+
 #Comments table
 class comment(models.Model):
     comment_body = models.TextField()
@@ -27,6 +35,12 @@ class comment(models.Model):
     reply_comment_id = models.ForeignKey("comment")
     comment_post_id = models.ForeignKey(post)
 
+    def __str__(self):
+        return self.comment_body
+
 # Words list table
 class word_list(models.Model):
     word_list = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.word_list
