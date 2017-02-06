@@ -25,3 +25,10 @@ def homePosts (request):
     context = {'posts': posts_data , 'cat': cats}
     return render(request , 'main/home.html' , context)
 
+def PostDetails(request, id):
+    #return HttpResponse('details of %s' %id)
+    postDetails =  get_object_or_404(post, id = id)
+    categoryDetails = postDetails.post_cat_id
+    comments = comment.objects.filter(comment_post_id = postDetails.id)
+    context = {'postDetails': postDetails, 'postCat': categoryDetails, 'comments': comments}
+    return render(request, 'post/postDetails.html',context )
