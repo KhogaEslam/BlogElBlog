@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'main',
+
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '',
     }
 }
 
@@ -116,8 +118,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Login page redirect
+LOGIN_REDIRECT_URL = '/home'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = ''
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
