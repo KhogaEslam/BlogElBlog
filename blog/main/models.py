@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 #Categories table
 class category(models.Model):
-    cat_title =models.CharField(max_length= 200)
+    cat_title = models.CharField(max_length= 200)
     user = models.ManyToManyField(User, blank=True)
 
     def __str__ (self):

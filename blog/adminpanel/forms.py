@@ -9,3 +9,8 @@ class RegisterForm(UserCreationForm):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields["username"].label = "User Name"
         self.fields["email"].label = "Email Address"
+
+class category_form(forms.ModelForm):
+    class Meta:
+        model = category
+        fields = ['cat_title',]
