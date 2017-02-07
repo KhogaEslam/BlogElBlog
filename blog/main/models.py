@@ -9,9 +9,9 @@ from django.contrib.auth.models import User
 #Categories table
 class category(models.Model):
     cat_title =models.CharField(max_length= 200)
-    class Meta:
-        verbose_name_plural = 'Categories'
-    def __str__(self):
+    user = models.ManyToManyField(User, blank=True)
+
+    def __str__ (self):
         return self.cat_title
 
 
@@ -44,3 +44,5 @@ class word_list(models.Model):
 
     def __str__(self):
         return self.word_list
+#    cat_id = models.ForeignKey(category)
+#    user_id = models.ForeignKey(User)

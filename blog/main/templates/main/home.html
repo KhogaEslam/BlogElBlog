@@ -40,14 +40,23 @@
                 {% endif %}
             </span>
         </div>
-<!--salma's task-->
+        <div class="categories-list">
+           {% for cat in categories %}
+              <div class="list-item">
+                    <div class="list-desc">
+                        <p> {{ cat.cat_title }} </p>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="subscribe">
+                        {% if cat in subscribedCats %}
+                          <a href = "/home/unsubscribe/{{cat.id}}"> Unsubscribe </a>
+                        {% else %}
+                          <a href = "/home/subscribe/{{cat.id}}"> Subscribe </a>
+                        {% endif %}
 
-{% for cat in cat %}
-    <ul>
-        <li>
-            {{cat.cat_title}}
-        </li>
-
-    </ul>
-{% endfor %}
+                    </div>
+                    {% endif %}
+              </div>
+           {% endfor %}
+        </div>
 {% endblock %}
