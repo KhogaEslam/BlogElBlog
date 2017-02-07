@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 #Categories table
 class category(models.Model):
     cat_title =models.CharField(max_length= 200)
+    user = models.ManyToManyField(User, blank=True)
+
+    def __str__ (self):
+        return self.cat_title
 
 #Posts table
 class post(models.Model):
@@ -30,3 +34,8 @@ class comment(models.Model):
 # Words list table
 class word_list(models.Model):
     word_list = models.CharField(max_length=50)
+
+#subscribers tabl
+#class CatSubscriber(models.Model):
+#    cat_id = models.ForeignKey(category)
+#    user_id = models.ForeignKey(User)
