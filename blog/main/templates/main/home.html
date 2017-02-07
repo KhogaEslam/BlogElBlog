@@ -17,7 +17,7 @@
             <tbody style=" border: 1px solid ">
             {% for post in posts %}
                 <tr style=" border: 1px solid ">
-                    <td style=" border: 1px solid ">{{post.post_title}}</td>
+                    <td style=" border: 1px solid "><a href="{{BASE_DIR}}/main/{{ post.id }}/post">{{post.post_title}}</a></td>
                     <td style=" border: 1px solid ">{{post.post_content}}</td>
                     <td style=" border: 1px solid "><img alt="img" src="{{BASE_DIR}}/{{post.post_img}}" height="300" width="300"></td>
                     <td style=" border: 1px solid ">{{post.post_date}}</td>
