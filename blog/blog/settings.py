@@ -31,14 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'main',
+    'adminpanel',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'main',
+
 
 ]
 
@@ -81,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD':'root',
     }
 }
 
