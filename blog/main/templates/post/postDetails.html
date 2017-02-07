@@ -1,0 +1,62 @@
+{%  extends 'main/base.html' %}
+
+{% load staticfiles %}
+  {% block main_block %}
+    <h1>{{ postDetails.post_title }}</h1>
+    <p><a href="/category/{{postCat.id}}/details">{{postCat.cat_title}}</a></p>
+    <p>{{postDetails.post_content}}</p>
+    <img src="{{BASE_DIR}}/{{postDetails.post_img}}" height="42" width="42">
+    <p>{{postDetails.post_date}}</p>
+
+
+    {% if postDetails.comment_set.all %}
+    <h2>Comments</h2>
+    <div class="comments">
+        {% for comment in postDetails.comment_set.all %}
+          {% if not comment.reply_comment_id %}
+            <span>
+                comment: {{ comment.comment_body }} said on {{ comment.comment_date }} by: {{ comment.comment_user_id }}
+            </span>
+                <br>
+                {% for reply in comment.comment_set.all %}
+                    <span>
+                        reply: {{ reply.comment_body }} said on {{ reply.comment_date }} by: {{ reply.comment_user_id }}
+                    </span>
+                  <br>
+                {% endfor %}
+
+                <h2>Add Reply</h2>
+
+                {% if request.user.is_authenticated %}
+               <form method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ comment.id }}/addReply"> {% csrf_token %}
+                 <label for="{{ form.comment_body.id_for_label }}">Reply:</label>
+               {{ form.comment_body }}
+                   <input type='submit' value='Reply'>
+               </form>
+               {% else %}
+               <p>You must login to reply </p>
+               {% endif %}
+
+                <hr>
+                <br>
+          {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <br />
+
+    <h2>Add Comment</h2>
+
+    {% if request.user.is_authenticated %}
+   <form method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/addComment"> {% csrf_token %}
+     <label for="{{ form.comment_body.id_for_label }}">Comment:</label>
+   {{ form.comment_body }}
+       <input type='submit' value='Comment'>
+   </form>
+   {% else %}
+   <p>You must login to comment </p>
+   {% endif %}
+
+  <a href="/main/"> go back </a>
+  {% endblock %}

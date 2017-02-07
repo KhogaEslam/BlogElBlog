@@ -14,6 +14,7 @@ class category(models.Model):
     def __str__ (self):
         return self.cat_title
 
+
 #Posts table
 class post(models.Model):
 
@@ -23,19 +24,25 @@ class post(models.Model):
     post_date=models.DateField(auto_now_add = True)
     post_cat_id=models.ForeignKey(category)
 
+    def __str__(self):
+        return self.post_title
+
 #Comments table
 class comment(models.Model):
     comment_body = models.TextField()
     comment_date=models.DateField(auto_now_add = True)
     comment_user_id=models.ForeignKey(User)
-    reply_comment_id = models.ForeignKey("comment")
+    reply_comment_id = models.ForeignKey('self', null=True, blank=True)
     comment_post_id = models.ForeignKey(post)
+
+    def __str__(self):
+        return self.comment_body
 
 # Words list table
 class word_list(models.Model):
     word_list = models.CharField(max_length=50)
 
-#subscribers tabl
-#class CatSubscriber(models.Model):
+    def __str__(self):
+        return self.word_list
 #    cat_id = models.ForeignKey(category)
 #    user_id = models.ForeignKey(User)

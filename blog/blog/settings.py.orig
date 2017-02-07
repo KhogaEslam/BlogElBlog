@@ -31,14 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'main',
+    'adminpanel',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'main',
+
 
 ]
 
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,10 +84,10 @@ DATABASES = {
         'NAME': 'blog',
         'USER': 'root',
 <<<<<<< HEAD
-        'PASSWORD': '',
+        'PASSWORD':'root',
 =======
-        'PASSWORD': 'root'
->>>>>>> 0deab97a5f1f412711f55471d734193c066ea184
+        'PASSWORD': 'root',
+>>>>>>> f3c00d584cd115b6e906385b3dd81628bfd29df7
     }
 }
 
@@ -124,6 +126,7 @@ USE_TZ = True
 
 #Login page redirect
 LOGIN_REDIRECT_URL = '/home'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
