@@ -40,12 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-    'accounts',
-    'main',
-    'adminpanel'
-=======
->>>>>>> ff138e8d11b30994e03bc1ebe6725d0f571986dc
 
 ]
 
