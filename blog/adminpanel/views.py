@@ -1,4 +1,4 @@
-from django.shortcuts import render , HttpResponseRedirect, HttpResponse
+from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from forms import RegisterForm , EditForm
@@ -17,19 +17,28 @@ from main.models import post
 # Create your views here.
 from forms import post_form
 
+def checkAdmin(request):
+    if not request.user.is_superuser:
+        return redirect('/accounts/login/')
+
+
 def admindashboard(request):
-	return render(request, 'adminpanel/admin.html')
+    checkAdmin(request)
+    if request.user.is_superuser:
+        return render(request, 'adminpanel/admin.html')
+
 # add post
 def add_post(request):
-	form = post_form()
-	if request.method == 'POST':
+    checkAdmin(request)
+    form = post_form()
+    if request.method == 'POST':
 		form = post_form(request.POST)
 		if form.is_valid():
 			form.save()
 			return HttpResponseRedirect('/adminpanel/posts')
 
-	context = {'post_form': form}
-	return render(request, 'adminpanel/posts/post_form.html',context)
+    context = {'post_form': form}
+    return render(request, 'adminpanel/posts/post_form.html',context)
 
 class registerUser(generic.CreateView):
     form_class = forms.RegisterForm
@@ -37,10 +46,13 @@ class registerUser(generic.CreateView):
     template_name = "adminpanel/users/adduser.html"
 
 def allUsers(request):
+    checkAdmin(request)
     allusers = User.objects.all()
     context = {'usersData': allusers}
     return render(request, 'adminpanel/users/allusers.html', context)
+
 def forbiddenWordsList(request):
+    checkAdmin(request)
     wordlist= word_list.objects.all()
     return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
 
@@ -49,18 +61,21 @@ def forbiddenWordsList(request):
 
 # show all posts
 def show_all_posts(request):
+    checkAdmin(request)
     all_posts = post.objects.all()
     context  = {'all_posts': all_posts}
     return render(request,'adminpanel/posts/index.html',context)
 
 #show post details
 def post_details(request, post_id):
-	post_d = post.objects.get(id=post_id)
-	context = {'post_d': post_d}
-	return render(request, 'adminpanel/posts/post_details.html',context )
+    checkAdmin(request)
+    post_d = post.objects.get(id=post_id)
+    context = {'post_d': post_d}
+    return render(request, 'adminpanel/posts/post_details.html',context )
 
 # Edit Post
 def edit_post(request, post_id):
+    checkAdmin(request)
     post_d = post.objects.get(id=post_id)
     form   = post_form(instance = post_d)
     if request.method == 'POST':
@@ -74,12 +89,14 @@ def edit_post(request, post_id):
 
 # Delete Post
 def delete_post(request, post_id):
-	post_d = post.objects.get(id=post_id)
-	post_d.delete()
-	return HttpResponseRedirect('/adminpanel/posts')
-from braces import views
+    checkAdmin(request)
+    post_d = post.objects.get(id=post_id)
+    post_d.delete()
+    return HttpResponseRedirect('/adminpanel/posts')
+#from braces import views
 # Create your views here.
 def showCategory(request):
+    checkAdmin(request)
     allCategory = category.objects.all()
     context = {'allCategory': allCategory}
     return render(request, 'adminpanel/category/index.html', context)
@@ -87,6 +104,7 @@ def showCategory(request):
 
 # add
 def add_category(request):
+    checkAdmin(request)
     form = category_form()
     if request.method == 'POST':
         form = category_form(request.POST)
@@ -111,6 +129,7 @@ class allUsers(ListView):
     context_object_name = 'users_data'
 
 def userProfile (request , user_id):
+    checkAdmin(request)
     userData = User.objects.get(id=user_id)
     context = {'userData':userData}
     return render(request , 'adminpanel/users/userProfile.html' , context)
@@ -121,6 +140,7 @@ from django.utils import timezone
 
 # edit
 def edit_category(request, id):
+    checkAdmin(request)
     cat = category.objects.get(id=id)
     form = category_form(instance=cat)
     if request.method == 'POST':
@@ -135,6 +155,7 @@ def edit_category(request, id):
 
 # delete
 def del_category(request, id):
+    checkAdmin(request)
     cat = category.objects.get(id=id)
     cat.delete()
     return HttpResponseRedirect('/adminpanel/all')
@@ -166,24 +187,28 @@ class updateUser(UpdateView):
 
 
 def deleteUser(request, user_id):
+    checkAdmin(request)
     user = User.objects.get(id=user_id)
     user.delete()
 
     return HttpResponseRedirect('/adminpanel/users/all')
 
 def blockUser(request, user_id):
+    checkAdmin(request)
     user = User.objects.get(id = user_id)
     user.is_active = False
     user.save()
     return HttpResponseRedirect('/adminpanel/users/all')
 
 def unblockUser(request, user_id):
+    checkAdmin(request)
     user = User.objects.get(id=user_id)
     user.is_active = True
     user.save()
     return HttpResponseRedirect('/adminpanel/users/all')
     
 def forbiddenWordsList(request):
+    checkAdmin(request)
     wordlist= word_list.objects.all()
     return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
 

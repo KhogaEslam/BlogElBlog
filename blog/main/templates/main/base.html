@@ -4,6 +4,13 @@
 <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}"/>
 {% include "main/header.html" %} 
 
+ {% if user.is_superuser %}
+     <div class="alert alert-success" role="alert">
+        You are logged in as super user {{ user }}, here are the
+        <a href="{{BASE_DIR}}/adminpanel">admin pages</a> for changing content.
+     </div>
+{% endif %}
+
 {% block main_block %}
 
 {% endblock %}

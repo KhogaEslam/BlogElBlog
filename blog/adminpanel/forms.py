@@ -11,8 +11,8 @@ class post_form(forms.ModelForm):
 
 
 class RegisterForm(UserCreationForm):	
-        model = User
-        fields= ["username", "email", "password1", "password2"]
+    model = User
+    fields= ["username", "email", "password1", "password2"]
     def __init__(self, *args , **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields["username"].label = "User Name"
