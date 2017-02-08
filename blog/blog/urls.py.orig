@@ -19,15 +19,22 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
     url(r'^adminpanel/', include('adminpanel.urls')),
+    url(r'^home/',include('main.urls')),
+=======
+    #url(r'^admin/', admin.site.urls),
     url(r'^adminpanel/', include('adminpanel.urls',namespace='adminpanel')),
+    #url(r'^admin/',admin.site.urls),
     url(r'^main/',include('main.urls')),
     url(r'^admin/', include('adminpanel.urls')),
     url(r'^home/', include('main.urls')),
+>>>>>>> 371f749885c509714a495e9b2dcce88dd5db8d47
     url(r'^accounts/', include("accounts.urls", namespace= 'accounts') ),
+<<<<<<< HEAD
+    url(r'^adminpanel/', include("adminpanel.urls", namespace="adminpanel") ),
+=======
     #url(r'^accounts/', include('django.contrib.auth.urls')),
 
-    #url(r'^adminpanel/', include("adminpanel.urls", namespace="adminpanel") ),
-
-    #url(r'^accounts/', include('django.contrib.auth.urls')),
+>>>>>>> ff138e8d11b30994e03bc1ebe6725d0f571986dc
 ]

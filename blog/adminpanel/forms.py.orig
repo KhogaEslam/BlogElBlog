@@ -1,6 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from main.models import category, word_list
+<<<<<<< HEAD
 from django import forms
 from main.models import post
 
@@ -8,9 +6,15 @@ class post_form(forms.ModelForm):
     class Meta:
         model  = post
         fields = ['post_title','post_content','post_img','post_cat_id']
+=======
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from main.models import category, word_list
+from django import forms
 
 
-class RegisterForm(UserCreationForm):	
+class RegisterForm(UserCreationForm):
+    class Meta:
         model = User
         fields= ["username", "email", "password1", "password2"]
     def __init__(self, *args , **kwargs):
@@ -37,3 +41,4 @@ class category_form(forms.ModelForm):
     class Meta:
         model = category
         fields = ['cat_title',]        
+>>>>>>> 371f749885c509714a495e9b2dcce88dd5db8d47

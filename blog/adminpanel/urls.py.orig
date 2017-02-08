@@ -1,6 +1,7 @@
-from django.conf.urls import url ,include
-from django.contrib import admin
-from . import views
+<<<<<<< HEAD
+from django.conf.urls import url
+import views
+
 urlpatterns = [
     url(r'^$', views.admindashboard),
     url(r'posts/add', views.add_post),
@@ -9,6 +10,11 @@ urlpatterns = [
     url(r'posts/(?P<post_id>[0-9]+)/change' , views.edit_post),
     url(r'posts/(?P<post_id>[0-9]+)/delete' , views.delete_post),
 
+=======
+from django.conf.urls import url ,include
+from django.contrib import admin
+from . import views
+urlpatterns = [
     url(r'^forbiddenwords/select/$', views.forbiddenWordsList),
     #url(r'^/forbiddenwords/create', views.forbiddenWordsCreate),
     #url(r'^/forbiddenwords/edit', views.forbiddenWordsEdit),
@@ -26,4 +32,5 @@ urlpatterns = [
     url(r'^users/(?P<user_id>[0-9]+)/delete$',views.deleteUser),
     url(r'^users/block/(?P<user_id>[0-9]+)/$' , views.blockUser),
     url(r'^users/unblock/(?P<user_id>[0-9]+)/$' , views.unblockUser),
+>>>>>>> 371f749885c509714a495e9b2dcce88dd5db8d47
 ]
