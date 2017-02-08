@@ -2,9 +2,10 @@
   <head>
   </head>
   <body>
-      <h1>Add User</h1>
+      <h1>Edit User</h1>
       <form method="POST">{% csrf_token %}
           {{ form.as_p }}
+          {{obj}}
         <button type="submit" >sign up</button>
       </form>
   </body>
