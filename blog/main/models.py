@@ -44,13 +44,13 @@ class comment(models.Model):
 # Words list table
 class word_list(models.Model):
     word_list = models.CharField(max_length=50)
-<<<<<<< HEAD
+
     def __str__ (self):
         return self.word_list
-=======
+
 
     def __str__(self):
         return self.word_list
 #    cat_id = models.ForeignKey(category)
 #    user_id = models.ForeignKey(User)
->>>>>>> ff138e8d11b30994e03bc1ebe6725d0f571986dc
+
