@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>  List all forbidden words </title>
+  </head>
+  <body>
+      <h1>
+        Forbidden words List
+      </h1>
+<<<<<<< HEAD
+      <p> There are {{wordlist.length}} forbidden words  </p>
+      <a href = {% url "adminpanel:createNewWord" %}> create </a>
+      {% for word in wordlist %}
+          <p> {{word}} </p>
+          <a href = {% url "adminpanel:editWord" pk=word.pk %}> edit </a>
+          <a href = {% url "adminpanel:deleteWord" pk=word.pk %}> delete</a>
+
+=======
+      {% for word in wordlist %}
+          <p> {{word}} </p>
+>>>>>>> ff138e8d11b30994e03bc1ebe6725d0f571986dc
+      {% endfor %}
+  </body>
+</html>
