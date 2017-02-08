@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from . import forms
 from django.db import models
 from django.contrib.auth.models import User
+from django.views.generic import ListView ,UpdateView
 
 from forms import category_form
 
