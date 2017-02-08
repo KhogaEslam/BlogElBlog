@@ -26,10 +26,8 @@ urlpatterns = [
     url(r'^admin/', include('adminpanel.urls')),
     url(r'^home/', include('main.urls')),
     url(r'^accounts/', include("accounts.urls", namespace= 'accounts') ),
-<<<<<<< HEAD
-    url(r'^adminpanel/', include("adminpanel.urls", namespace="adminpanel") ),
-=======
-    #url(r'^accounts/', include('django.contrib.auth.urls')),
 
->>>>>>> ff138e8d11b30994e03bc1ebe6725d0f571986dc
+    url(r'^adminpanel/', include("adminpanel.urls", namespace="adminpanel") ),
+
+    #url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
