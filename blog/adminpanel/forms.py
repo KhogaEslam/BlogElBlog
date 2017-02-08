@@ -5,11 +5,12 @@ from django import forms
 from main.models import post
 
 class post_form(forms.ModelForm):
-
-class RegisterForm(UserCreationForm):
     class Meta:
         model  = post
         fields = ['post_title','post_content','post_img','post_cat_id']
+
+
+class RegisterForm(UserCreationForm):	
         model = User
         fields= ["username", "email", "password1", "password2"]
     def __init__(self, *args , **kwargs):
