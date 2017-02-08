@@ -1,0 +1,16 @@
+<table border ='1'>
+  <thead>
+    <th>category_title</th>
+    <th colspan="4">Actions</th>
+  </thead>
+  <tbody>
+    {% for cat in allCategory %}
+      <tr>
+        <td>{{ cat.cat_title }}</td>
+        <td><a href="{{cat.id}}/details">details</td>
+        <td><a href="category/{{cat.id}}/edit">edit</td>
+        <td><a href="category/{{cat.id}}/del">delete</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
