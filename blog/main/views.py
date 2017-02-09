@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 import random
 import re
 # Create your views here.
-class ProfanitiesFilter(object):
+class OffensiveWordsFilter(object):
     def __init__(self, filterlist, ignore_case=True, replacements="$@%-?!", complete=True, inside_words=False):
         self.badwords = filterlist
         self.ignore_case = ignore_case
@@ -41,16 +41,16 @@ class ProfanitiesFilter(object):
 
         return r.sub(self.__replacer, text)
 
-def censor(sentence):
+def wordsCleaner(sentence):
     badwords = word_list.objects.values_list('word_list', flat=True)
     if badwords.exists():
-        f = ProfanitiesFilter(badwords, replacements="*")
+        owf = OffensiveWordsFilter(badwords, replacements="*")
         #print f.clean(sentence)
-        f.inside_words = True
+        owf.inside_words = True
         #print f.clean(sentence)
-        f.complete = False
+        owf.complete = False
         #print f.clean(sentence)
-        return f.clean(sentence)
+        return owf.clean(sentence)
     else:
         return sentence
 
@@ -125,7 +125,7 @@ def addComment(request, postID):
 	    comment = CommentForm(request.POST, request.FILES)
 	    if comment.is_valid():
 		    comment = comment.save(commit=False)
-            comment.comment_body = censor(comment.comment_body)
+            comment.comment_body = wordsCleaner(comment.comment_body)
             comment.post = post.objects.get(id = postID)
             #comment.User = User.objects.get(id = request.user.id)
             comment.comment_user_id_id = request.user.id
@@ -140,7 +140,7 @@ def addReply(request, postID, commentID):
 	    reply = CommentForm(request.POST, request.FILES)
 	    if reply.is_valid():
 		    reply = reply.save(commit=False)
-            reply.comment_body = censor(reply.comment_body)
+            reply.comment_body = wordsCleaner(reply.comment_body)
             reply.post = post.objects.get(id = postID)
             #comment.User = User.objects.get(id = request.user.id)
             reply.comment_user_id_id = request.user.id
