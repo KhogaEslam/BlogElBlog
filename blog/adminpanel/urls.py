@@ -14,7 +14,7 @@ urlpatterns = [
     #url(r'^/forbiddenwords/edit', views.forbiddenWordsEdit),
     #url(r'^/forbiddenwords/delete', views.forbiddenWordsDelete),
     url(r'^users/add$',views.registerUser.as_view(),name='adduser'),
-    url(r'^users/all$',views.allUsers,name='allusers'),
+    #url(r'^users/all$',views.allUsers,name='allusers'),
     url(r'^category$' , views.showCategory),
     url(r'^category/add$',views.add_category),
     url(r'^category/(?P<id>[0-9]+)/change$', views.edit_category),

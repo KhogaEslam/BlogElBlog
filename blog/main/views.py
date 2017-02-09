@@ -94,7 +94,7 @@ def subscribe(request, cat_id):
     current_user = request.user
     subscribed_cats = category.objects.get(id = cat_id)
     subscribed_cats.user.add(current_user)
-    #confirmSubscription(current_user.email,subscribed_cats.cat_title)
+    confirmSubscription(current_user.email,subscribed_cats.cat_title)
     return HttpResponseRedirect('/home')
 
 def unsubscribe(request, cat_id):

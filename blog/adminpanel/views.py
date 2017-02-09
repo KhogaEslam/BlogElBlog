@@ -1,44 +1,46 @@
-from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views import generic
-from forms import RegisterForm , EditForm
-from main.models import word_list, category
-from django.views import generic
-from django.core.urlresolvers import reverse_lazy
-from . import forms
-from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.shortcuts import render , redirect
+from django.views import generic
 from django.views.generic import ListView ,UpdateView
-from django.views.generic import TemplateView
 
 from forms import category_form
-
-from main.models import post
-# Create your views here.
 from forms import post_form
+from main.models import post
+from main.models import word_list, category
+from . import forms
+
+
 
 def checkAdmin(request):
-    if not request.user.is_superuser:
-        return redirect('/accounts/login/')
-
+    isSuper = False
+    if request.user.is_superuser:
+        isSuper = True
+        print isSuper
+    print isSuper
+    return isSuper
 
 def admindashboard(request):
-    checkAdmin(request)
-    if request.user.is_superuser:
+    if checkAdmin(request):
         return render(request, 'adminpanel/admin.html')
+    else:
+        return redirect('/accounts/login/')
 
 # add post
 def add_post(request):
-    checkAdmin(request)
-    form = post_form()
-    if request.method == 'POST':
-		form = post_form(request.POST)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/adminpanel/posts')
+    if checkAdmin(request):
+        form = post_form()
+        if request.method == 'POST':
+            form = post_form(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/adminpanel/posts')
 
-    context = {'post_form': form}
-    return render(request, 'adminpanel/posts/post_form.html',context)
+        context = {'post_form': form}
+        return render(request, 'adminpanel/posts/post_form.html',context)
+    else:
+        return redirect('/accounts/login/')
 
 class registerUser(generic.CreateView):
     form_class = forms.RegisterForm
@@ -46,74 +48,89 @@ class registerUser(generic.CreateView):
     template_name = "adminpanel/users/adduser.html"
 
 def allUsers(request):
-    checkAdmin(request)
-    allusers = User.objects.all()
-    context = {'usersData': allusers}
-    return render(request, 'adminpanel/users/allusers.html', context)
+    if checkAdmin(request):
+        allusers = User.objects.all()
+        context = {'usersData': allusers}
+        return render(request, 'adminpanel/users/allusers.html', context)
+    else:
+        return redirect('/accounts/login/')
 
 def forbiddenWordsList(request):
-    checkAdmin(request)
-    wordlist= word_list.objects.all()
-    return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
+    if checkAdmin(request):
+        wordlist= word_list.objects.all()
+        return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
 
-
+    else:
+        return redirect('/accounts/login/')
 
 
 # show all posts
 def show_all_posts(request):
-    checkAdmin(request)
-    all_posts = post.objects.all()
-    context  = {'all_posts': all_posts}
-    return render(request,'adminpanel/posts/index.html',context)
+    if checkAdmin(request):
+        all_posts = post.objects.all()
+        context  = {'all_posts': all_posts}
+        return render(request,'adminpanel/posts/index.html',context)
+    else:
+        return redirect('/accounts/login/')
 
 #show post details
 def post_details(request, post_id):
-    checkAdmin(request)
-    post_d = post.objects.get(id=post_id)
-    context = {'post_d': post_d}
-    return render(request, 'adminpanel/posts/post_details.html',context )
+    if checkAdmin(request):
+        post_d = post.objects.get(id=post_id)
+        context = {'post_d': post_d}
+        return render(request, 'adminpanel/posts/post_details.html',context )
+    else:
+        return redirect('/accounts/login/')
 
 # Edit Post
 def edit_post(request, post_id):
-    checkAdmin(request)
-    post_d = post.objects.get(id=post_id)
-    form   = post_form(instance = post_d)
-    if request.method == 'POST':
-        form = post_form(request.POST, instance=post_d)
-        if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/adminpanel/posts')
+    if checkAdmin(request):
+        post_d = post.objects.get(id=post_id)
+        form   = post_form(instance = post_d)
+        if request.method == 'POST':
+            form = post_form(request.POST, instance=post_d)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/adminpanel/posts')
 
-    context = {'post_form': form}
-    return render(request, 'adminpanel/posts/post_form.html',context)
+        context = {'post_form': form}
+        return render(request, 'adminpanel/posts/post_form.html',context)
+    else:
+        return redirect('/accounts/login/')
 
 # Delete Post
 def delete_post(request, post_id):
-    checkAdmin(request)
-    post_d = post.objects.get(id=post_id)
-    post_d.delete()
-    return HttpResponseRedirect('/adminpanel/posts')
+    if checkAdmin(request):
+        post_d = post.objects.get(id=post_id)
+        post_d.delete()
+        return HttpResponseRedirect('/adminpanel/posts')
+    else:
+        return redirect('/accounts/login/')
 #from braces import views
 # Create your views here.
 def showCategory(request):
-    checkAdmin(request)
-    allCategory = category.objects.all()
-    context = {'allCategory': allCategory}
-    return render(request, 'adminpanel/category/index.html', context)
+    if checkAdmin(request):
+        allCategory = category.objects.all()
+        context = {'allCategory': allCategory}
+        return render(request, 'adminpanel/category/index.html', context)
+    else:
+        return redirect('/accounts/login/')
 
 
 # add
 def add_category(request):
-    checkAdmin(request)
-    form = category_form()
-    if request.method == 'POST':
-        form = category_form(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/adminpanal/all')
+    if checkAdmin(request):
+        form = category_form()
+        if request.method == 'POST':
+            form = category_form(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/adminpanal/all')
 
-    context = {'cat_form': form}
-    return render(request, 'adminpanel/category_form.html', context)
+        context = {'cat_form': form}
+        return render(request, 'adminpanel/category_form.html', context)
+    else:
+        return redirect('/accounts/login/')
 
 #def allUsers(request):
 #    allusers = User.objects.all()
@@ -129,36 +146,39 @@ class allUsers(ListView):
     context_object_name = 'users_data'
 
 def userProfile (request , user_id):
-    checkAdmin(request)
-    userData = User.objects.get(id=user_id)
-    context = {'userData':userData}
-    return render(request , 'adminpanel/users/userProfile.html' , context)
-
-from django.views.generic.detail import DetailView
-from django.utils import timezone
+    if checkAdmin(request):
+        userData = User.objects.get(id=user_id)
+        context = {'userData':userData}
+        return render(request , 'adminpanel/users/userProfile.html' , context)
+    else:
+        return redirect('/accounts/login/')
 
 
 # edit
 def edit_category(request, id):
-    checkAdmin(request)
-    cat = category.objects.get(id=id)
-    form = category_form(instance=cat)
-    if request.method == 'POST':
-        form = category_form(request.POST, instance=cat)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/adminpanel/all')
+    if checkAdmin(request):
+        cat = category.objects.get(id=id)
+        form = category_form(instance=cat)
+        if request.method == 'POST':
+            form = category_form(request.POST, instance=cat)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/adminpanel/all')
 
-    context = {'cat_form': form}
-    return render(request, 'adminpanel/category_form.html', context)
+        context = {'cat_form': form}
+        return render(request, 'adminpanel/category_form.html', context)
+    else:
+        return redirect('/accounts/login/')
 
 
 # delete
 def del_category(request, id):
-    checkAdmin(request)
-    cat = category.objects.get(id=id)
-    cat.delete()
-    return HttpResponseRedirect('/adminpanel/all')
+    if checkAdmin(request):
+        cat = category.objects.get(id=id)
+        cat.delete()
+        return HttpResponseRedirect('/adminpanel/all')
+    else:
+        return redirect('/accounts/login/')
 #    model = Article
 
  #   def get_context_data(self, **kwargs):
@@ -187,30 +207,37 @@ class updateUser(UpdateView):
 
 
 def deleteUser(request, user_id):
-    checkAdmin(request)
-    user = User.objects.get(id=user_id)
-    user.delete()
-
-    return HttpResponseRedirect('/adminpanel/users/all')
+    if checkAdmin(request):
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return HttpResponseRedirect('/adminpanel/users/all')
+    else:
+        return redirect('/accounts/login/')
 
 def blockUser(request, user_id):
-    checkAdmin(request)
-    user = User.objects.get(id = user_id)
-    user.is_active = False
-    user.save()
-    return HttpResponseRedirect('/adminpanel/users/all')
+    if checkAdmin(request):
+        user = User.objects.get(id = user_id)
+        user.is_active = False
+        user.save()
+        return HttpResponseRedirect('/adminpanel/users/all')
+    else:
+        return redirect('/accounts/login/')
 
 def unblockUser(request, user_id):
-    checkAdmin(request)
-    user = User.objects.get(id=user_id)
-    user.is_active = True
-    user.save()
-    return HttpResponseRedirect('/adminpanel/users/all')
+    if checkAdmin(request):
+        user = User.objects.get(id=user_id)
+        user.is_active = True
+        user.save()
+        return HttpResponseRedirect('/adminpanel/users/all')
+    else:
+        return redirect('/accounts/login/')
     
 def forbiddenWordsList(request):
-    checkAdmin(request)
-    wordlist= word_list.objects.all()
-    return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
+    if checkAdmin(request):
+        wordlist= word_list.objects.all()
+        return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
+    else:
+        return redirect('/accounts/login/')
 
 class ForbiddenWord_delete(generic.DeleteView):
     model = word_list
