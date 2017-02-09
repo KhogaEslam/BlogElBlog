@@ -1,10 +1,13 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+*.pyc
+*.pyc.orig
 # C extensions
 *.so
-
+.idea/
+migrations/
+settings.py
 # Distribution / packaging
 bin/
 build/

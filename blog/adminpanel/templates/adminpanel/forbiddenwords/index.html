@@ -6,6 +6,13 @@
       <h1>
         Forbidden words List
       </h1>
+      <p> There are {{wordlist.length}} forbidden words  </p>
+      <a href = {% url "adminpanel:createNewWord" %}> create </a>
+      {% for word in wordlist %}
+          <p> {{word}} </p>
+          <a href = {% url "adminpanel:editWord" pk=word.pk %}> edit </a>
+          <a href = {% url "adminpanel:deleteWord" pk=word.pk %}> delete</a>
+
       {% for word in wordlist %}
           <p> {{word}} </p>
       {% endfor %}

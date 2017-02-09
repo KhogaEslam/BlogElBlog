@@ -16,13 +16,20 @@ Including another URLconf
 from django.conf.urls import url ,include
 from django.contrib import admin
 
+admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/',admin.site.urls),
-    url(r'^main/',include('main.urls')),
+    url(r'^',include('main.urls')),
+    url(r'^admin/', admin.site.urls),
     url(r'^adminpanel/', include('adminpanel.urls')),
-    url(r'^home/',include('main.urls')),
+    url(r'^adminpanel/', include('adminpanel.urls',namespace='adminpanel')),
+    url(r'^main/',include('main.urls')),
+
+    url(r'^home/', include('main.urls')),
     url(r'^accounts/', include("accounts.urls", namespace= 'accounts') ),
     #url(r'^accounts/', include('django.contrib.auth.urls')),
 
+    #url(r'^adminpanel/', include("adminpanel.urls", namespace="adminpanel") ),
+
+    #url(r'^accounts/', include('django.contrib.auth.urls')),
 ]
