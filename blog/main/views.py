@@ -42,14 +42,17 @@ class ProfanitiesFilter(object):
         return r.sub(self.__replacer, text)
 
 def censor(sentence):
-    badwords = word_list.objects.values_list('word_list', flat=True) # consider making this an argument too
-    f = ProfanitiesFilter(badwords, replacements="*")
-    #print f.clean(sentence)
-    f.inside_words = True
-    #print f.clean(sentence)
-    f.complete = False
-    #print f.clean(sentence)
-    return f.clean(sentence) # return rather than print
+    badwords = word_list.objects.values_list('word_list', flat=True)
+    if badwords.exists():
+        f = ProfanitiesFilter(badwords, replacements="*")
+        #print f.clean(sentence)
+        f.inside_words = True
+        #print f.clean(sentence)
+        f.complete = False
+        #print f.clean(sentence)
+        return f.clean(sentence)
+    else:
+        return sentence
 
 def homePosts (request):
     posts = post.objects.all().order_by('-post_date')
