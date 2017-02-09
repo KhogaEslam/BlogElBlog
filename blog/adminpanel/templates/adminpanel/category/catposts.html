@@ -1,0 +1,23 @@
+{%  extends 'main/base.html' %}
+ {% load staticfiles %}
+    {% block main_block %}
+<table border ='1'>
+  <thead>
+    <th>post title</th>
+    <th>post content</th>
+    <th> image </th>
+  </thead>
+  <tbody>
+    {% for post in catposts %}
+      <tr>
+        <td>{{ post.post_title }}</td>
+        <td>  {{post.post_content}}</td>
+        <td> <img src="{{BASE_DIR}}/{{post.post_img}}" height="300" width="300"> </td>
+        <td><a href="category/{{post.id}}/del">delete</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="adminpanel/category/add">Add post</a>
+
+{% endblock %}

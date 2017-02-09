@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from main.models import word_list, category
+from main.models import word_list, category , post
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from . import forms
@@ -26,11 +26,17 @@ def forbiddenWordsList(request):
 
 
 
-# Create your views here.
+# Show Categories
 def showCategory(request):
     allCategory = category.objects.all()
     context = {'allCategory': allCategory}
     return render(request, 'adminpanel/category/index.html', context)
+# category details
+def category_posts(request,id):
+    cat_post = post.objects.filter(post_cat_id_id=id)
+    context = {'catposts':cat_post}
+    return render (request , 'adminpanel/category/catposts.html' , context)
+    #return HttpResponseRedirect('/adminpanel/category')
 
 
 # add
@@ -40,10 +46,10 @@ def add_category(request):
         form = category_form(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/adminpanal/all')
+            return HttpResponseRedirect('/adminpanel/category')
 
-    context = {'cat_form': form}
-    return render(request, 'adminpanel/category_form.html', context)
+    context = {'category_form': form}
+    return render(request, 'adminpanel/category/category_form.html', context)
 
 
 # edit
@@ -54,14 +60,13 @@ def edit_category(request, id):
         form = category_form(request.POST, instance=cat)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/adminpanel/all')
+            return HttpResponseRedirect('/adminpanel/category')
 
-    context = {'cat_form': form}
-    return render(request, 'adminpanel/category_form.html', context)
-
+    context = {'category_form': form}
+    return render(request, 'adminpanel/category/category_form.html', context)
 
 # delete
 def del_category(request, id):
     cat = category.objects.get(id=id)
     cat.delete()
-    return HttpResponseRedirect('/adminpanel/all')
+    return HttpResponseRedirect('/adminpanel/category')
