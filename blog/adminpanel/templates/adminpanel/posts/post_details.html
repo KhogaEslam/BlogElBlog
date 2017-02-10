@@ -1,7 +1,19 @@
+{% extends 'adminpanel/Base/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+<div class="col-md-8">
+<h1> Posts </h1>
+</div>
+<div style="text-align: right" class="col-md-4">
+	<a class="btn btn-primary btn-lg" href="adminpanel/posts/add">Add Post</a>
+
+</div>
+</div>
 
 <h1> {{ Post_d.id }} </h1>
 <table border ='1'>
-<th>Title</th> <th>Content</th><th>category</th><th>Image</th>
+<th>Title</th> <th>Content</th><th>category</th><th>Image</th> <th> Views </th>
 
 
 <tr>
@@ -9,6 +21,9 @@
 	<td>{{Post_d.post_content}}</td>
 	<td>{{Post_d.post_cat_id}}</td>
 	<td>{{Post_d.post_img}}</td>
+	<td>{{Post_d.post_views}}</td>
+
 </tr>
 
 </table>
+{% endblock %}

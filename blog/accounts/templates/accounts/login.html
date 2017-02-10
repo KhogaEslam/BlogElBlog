@@ -1,0 +1,30 @@
+{%  extends 'main/base.html' %}
+ {% load staticfiles %}
+ {% load bootstrap %}
+    {% block title %}
+        <title> Login </title>
+    {% endblock %}
+    {% block specific_style %}
+      <style>
+      .banner-body , body, html{
+        height: 100% !important;
+      }
+      </style>
+    {% endblock %}
+    {% block main_block %}
+      <h1 style="margin-bottom:40px">Login</h1>
+      <div class="form-group">
+      {% autoescape off %}
+          <p>{{ err }}</p>
+      {% endautoescape %}
+      <form method="POST"> {% csrf_token %}
+          {{ form|bootstrap }}
+        <div class="form-group">
+          <button class="btn btn-primary btn-lg" type="submit" >Submit</button>
+        </div>
+      </form>
+      </div>
+
+{% endblock %}
+</body>
+</html>

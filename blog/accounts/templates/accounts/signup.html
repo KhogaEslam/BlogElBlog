@@ -1,11 +1,26 @@
-<html>
-  <head>
-  </head>
-  <body>
-      <h1>Register</h1>
-      <form method="POST">{% csrf_token %}
-          {{ form.as_p }}
-        <button type="submit" >sign up</button>
-      </form>
+{%  extends 'main/base.html' %}
+ {% load staticfiles %}
+ {% load bootstrap %}
+    {% block title %}
+     <title> Sign in </title>
+    {% endblock %}
+    {% block specific_style %}
+      <style>
+      .banner-body , body, html{
+        height: 100% !important;
+      }
+      </style>
+    {% endblock %}
+    {% block main_block %}
+            <h1 style="margin-bottom: 40px;">Register</h1>
+      <div class="form-group">
+        <form class="control" method="POST">{% csrf_token %}
+            {{ form|bootstrap }}
+      <div class="form-group">
+          <button class="btn btn-primary btn-lg" type="submit" >Sign Up</button>
+      </div>
+        </form>
+      </div>
+    {% endblock %}
   </body>
 </html>

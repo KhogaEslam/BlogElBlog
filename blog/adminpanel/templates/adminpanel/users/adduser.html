@@ -1,11 +1,12 @@
-<html>
-  <head>
-  </head>
-  <body>
+{% extends 'adminpanel/Base/base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+{% block content %}
       <h1>Add User</h1>
       <form method="POST">{% csrf_token %}
-          {{ form.as_p }}
-        <button type="submit" >sign up</button>
+          {{ form|bootstrap }}
+        <button class="btn btn-primary btn-lg" type="submit" > Register </button>
       </form>
   </body>
 </html>
+{% endblock %}

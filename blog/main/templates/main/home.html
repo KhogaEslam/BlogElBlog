@@ -1,35 +1,80 @@
 {%  extends 'main/base.html' %}
  {% load staticfiles %}
+    {% block title %}
+      <title> Blog| Home</title>
+    {% endblock %}
 
     {% block main_block %}
+    <script>
+       // You can also use "$(window).load(function() {"
+       $(function () {
+         // Slideshow 4
+         $("#slider3").responsiveSlides({
+           auto: true,
+           pager: false,
+           nav: true,
+           speed: 500,
+           namespace: "callbacks",
+           before: function () {
+             $('.events').append("<li>before event fired.</li>");
+           },
+           after: function () {
+             $('.events').append("<li>after event fired.</li>");
+           }
+         });
 
-        <h1>
-            Posts
-        </h1>
-        <table style=" border: 1px solid ">
-            <thead style=" border: 1px solid ">
-                <tr style=" border: 1px solid ">
-                    <th style=" border: 1px solid ">Post Title</th>
-                    <th style=" border: 1px solid ">Content</th>
-                    <th style=" border: 1px solid ">Image</th>
-                    <th style=" border: 1px solid ">Date</th>
-                </tr>
-            </thead>
-            <tbody style=" border: 1px solid ">
+       });
+     </script>
+
+    <div  id="top" class="callbacks_container wow fadeInUp" data-wow-delay="0.5s">
+      <ul class="rslides" id="slider3">
+        {% for feature_post in feature_posts %}
+        <li style="background-image: url('{{BASE_DIR}}/{{feature_post.post_img}}' ); background-size: cover;background-repeat:no-repeat">
+          <div class="banner-inf">
+            <h3>{{feature_post.post_title}}</h3>
+            <p>{{feature_post.post_content|truncatewords:30}}</p>
+            <a href="{{BASE_DIR}}/main/{{ feature_post.id }}/post">See More</a>
+          </div>
+        </li>
+          {% endfor %}
+
+      </ul>
+    </div>
+    <div style="clear: both"class="clearfix">
+
+    <div style="margin-top: 30px;" class="blog">
+
+
+      <h1 style="margin-top: 30px;"> Posts </h1>
+      <div class="blog-left">
+        <div class="blog-left-grid">
+          {% if posts %}
             {% for post in posts %}
-                <tr style=" border: 1px solid ">
-                    <td style=" border: 1px solid "><a href="{{BASE_DIR}}/main/{{ post.id }}/post">{{post.post_title}}</a></td>
-                    <td style=" border: 1px solid ">{{post.post_content}}</td>
-                    <td style=" border: 1px solid "><img alt="img" src="{{BASE_DIR}}/{{post.post_img}}" height="300" width="300"></td>
-                    <td style=" border: 1px solid ">{{post.post_date}}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            <div class="blog-left-grid-left" style="padding-top: 30px;">
+                <h3><a href="{{BASE_DIR}}/main/{{ post.id }}/post">{{post.post_title}}</a></h3>
+                <p>by <span>Admin</span> | {{post.post_date}} <p class="post-views"> <i class="fa fa-eye" aria-hidden="true"></i>
+ {{post.post_views }} views</p> </p>
+              </div>
+              <div class="blog-left-grid-right">
+                <a href="#" class="hvr-bounce-to-bottom non">{{post.comment_set.count}} Comments</a>
+              </div>
+              <div class="clearfix"> </div>
+              <a href="{{BASE_DIR}}/main/{{ post.id }}/post"><img src="{{BASE_DIR}}/{{post.post_img}}" alt=" " class="img-responsive" /></a>
+              <p class="para"> {{post.post_content|truncatewords:30}}</p>
+              <div class="rd-mre">
+                <a href="{{BASE_DIR}}/main/{{ post.id }}/post" class="hvr-bounce-to-bottom quod">Read More</a>
+              </div>
+
+                 {% endfor %}
+                 {% else %}
+                 <p> There are no posts  </p>
+
+           {% endif %}
+        </div>
         <div class="pagination">
             <span class="step-links">
                 {% if posts.has_previous %}
-                    <a href="?page={{ posts.previous_page_number }}">previous</a>
+                    <a class="btn btn-primary" href="?page={{ posts.previous_page_number }}">previous</a>
                 {% endif %}
 
                 <span class="current">
@@ -37,27 +82,13 @@
                 </span>
 
                 {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}">next</a>
+                    <a  class="btn btn-primary" href="?page={{ posts.next_page_number }}">next</a>
                 {% endif %}
             </span>
         </div>
-        <div class="categories-list">
-           {% for cat in categories %}
-              <div class="list-item">
-                    <div class="list-desc">
-                        <p> {{ cat.cat_title }} </p>
-                    </div>
-                    {% if request.user.is_authenticated %}
-                    <div class="subscribe">
-                        {% if cat in subscribedCats %}
-                          <a href = "/home/unsubscribe/{{cat.id}}"> Unsubscribe </a>
-                        {% else %}
-                          <a href = "/home/subscribe/{{cat.id}}"> Subscribe </a>
-                        {% endif %}
+      </div>
+       {% include "main/sidebar.html" %}
 
-                    </div>
-                    {% endif %}
-              </div>
-           {% endfor %}
-        </div>
+      </div>
+    </div>
 {% endblock %}

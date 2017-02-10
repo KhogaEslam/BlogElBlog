@@ -1,0 +1,19 @@
+<div class="blog-right">
+  <div class="sap_tabs">
+    <h2 style="margin-bottom: 30px"> Categories </h2>
+    <div class="categories-list pgs">
+       {% for cat in categories %}
+          <ul class="list-item">
+                    <li> <a style="font-size: 24px; " href = "/category/{{cat.id}}/posts"> {{ cat.cat_title }} </a>
+                {% if request.user.is_authenticated %}
+                    {% if cat in subscribedCats %}
+                      <a  class="unsubscribe btn btn-primary" href = "/home/unsubscribe/{{cat.id}}"> Unsubscribe </a>
+                    {% else %}
+                      <a  class="subscribe btn btn-primary" href = "/home/subscribe/{{cat.id}}"> Subscribe </a>
+                    {% endif %}
+
+                {% endif %}
+            </li>
+          </ul>
+       {% endfor %}
+    </div>

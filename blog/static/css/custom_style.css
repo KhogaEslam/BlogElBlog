@@ -1,0 +1,88 @@
+.banner-body , body, html{
+  min-height: 100%;
+}
+
+.unsubscribe{
+   background: red;
+ }
+.subscribe{
+   background: green;
+ }
+ .subscribe, .unsubscribe{
+     border: none;
+     color: #fff !important;
+     float: right;
+   }
+.addComment textarea , .addReply textarea {
+   height: 50px;
+   width: 70%;
+   padding-left: 10px;
+   margin-top: 10px
+}
+.addComment .btn , .addReply .btn{
+  display: block;
+  width: 100px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.user-profile {
+  margin-right: 20px;
+}
+.user-name {
+  font-weight:bold;
+   color: red;
+   text-transform: capitalize;
+}
+.comment-info , .reply-info {
+  color: #c34c21;
+  font-size: 12px;
+  font-style: italic;
+  font-weight:bold;
+}
+.reply {
+  margin-left: 60px;
+}
+.user-profile, .comment-container {
+  display: inline-block;
+  vertical-align: middle;
+  float:none;
+}
+/* Styling the admin panel */
+.left_col {
+  border-right: 1px solid lightslategrey;
+}
+.nav.side-menu li a:hover{
+  background: azure;
+  color: #000 !important;
+}
+#datatable {
+  color: black;
+  font-size: 16px;
+}
+#datatable td, #datatable th {
+  text-align: center;
+  vertical-align: middle;
+  max-width: 600px;
+  min-width:150px;
+}
+#datatable th {
+  color: #2A3F54;
+}
+#datatable i {
+
+  color: #fff;
+  font-size: 18px;
+}
+#datatable a {
+  font-size: 18px;
+  color: #fff;
+}
+#datatable th {
+  background: #eee
+}
+#datatable , #datatable td ,#datatable th ,#datatable tr {
+  border: none !important;
+}
+#datatable table img {
+  width: 200px !important;;
+}

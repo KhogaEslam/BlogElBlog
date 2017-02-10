@@ -1,15 +1,39 @@
-<!DOCTYPE html>
 {% load staticfiles %}
-<title>Blog ElBlog!</title>
-<link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}"/>
-{% include "main/header.html" %} 
+<!DOCTYPE html>
+<html>
+<head>
+  {% block title %}
 
- {% if user.is_superuser %}
-     <div class="alert alert-success" role="alert">
-        You are logged in as super user {{ user }}, here are the
-        <a href="{{BASE_DIR}}/adminpanel">admin pages</a> for changing content.
-     </div>
-{% endif %}
+  {% endblock %}
+  {% block specific_style %}
+  {% endblock %}
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href={% static "css/bootstrap.css" %} rel="stylesheet" type="text/css" media="all" />
+<link href={% static "css/style.css" %} rel="stylesheet" type="text/css" media="all" />
+<link href={% static "css/custom_style.css" %} rel="stylesheet" type="text/css" media="all" />
+
+<!-- js -->
+<script src={% static "js/jquery-1.11.1.min.js" %}></script>
+<!-- //js -->
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src= {% static "js/move-top.js" %}></script>
+<script type="text/javascript" src= {% static "js/easing.js" %}></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+</head>
+ {% include "main/header.html" %}
+<link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.ico' %}"/>
+
+<div class="header-bottom" style="overflow: hidden">
 
 {% block main_block %}
 

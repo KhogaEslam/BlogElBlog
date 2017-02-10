@@ -1,12 +1,18 @@
-<html>
-  <head>
-  </head>
-  <body>
-      <h1>Edit User</h1>
-      <form method="POST">{% csrf_token %}
-          {{ form.as_p }}
-          {{obj}}
-        <button type="submit" >sign up</button>
-      </form>
+{% extends 'adminpanel/Base/base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+{% block content %}
+<h1>Edit User</h1>
+<form method="POST">{% csrf_token %}
+    {{ form|bootstrap }}
+    {{obj}}
+  <button class="btn btn-primary" type="submit" >Save Changes</button>
+</form>
+{% url 'admin_password_reset' as password_reset_url %}
+
+   <div class="password-reset-link">
+       <a href="{% url 'accounts:password_change' %}">change Password</a>
+   </div>
   </body>
 </html>
+{% endblock %}

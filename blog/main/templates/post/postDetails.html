@@ -1,12 +1,21 @@
 {%  extends 'main/base.html' %}
-
+  {% block title %}
+   <title> {{postDetails.post_title}} </title>
+  {% endblock %}
 {% load staticfiles %}
   {% block main_block %}
-    <h1>{{ postDetails.post_title }}</h1>
-    <p><a href="/category/{{postCat.id}}/details">{{postCat.cat_title}}</a></p>
-    <p>{{postDetails.post_content}}</p>
-    <img src="{{BASE_DIR}}/{{postDetails.post_img}}" height="200" width="200">
-    <p>{{postDetails.post_date}}</p>
+  <script>
+  $(function() {
+        $(".addComment textarea").attr('placeholder', 'Write a comment' );
+          $(".addReply textarea").attr('placeholder', 'Write a reply' );
+    });
+</script>
+    <h1 style="margin-bottom: 30px;">{{ postDetails.post_title }}</h1>
+    <p>Category : <a href="/category/{{postCat.id}}/details">{{postCat.cat_title}}</a></p>
+    <p>Date: {{postDetails.post_date}}</p>
+    <img src="{{BASE_DIR}}/{{postDetails.post_img}}" style="width: 100%" >
+    <article style="margin-top:30px;">{{postDetails.post_content}}</article>
+
 
 
     {% if postDetails.comment_set.all %}
@@ -14,49 +23,47 @@
     <div class="comments">
         {% for comment in postDetails.comment_set.all %}
           {% if not comment.reply_comment_id %}
-            <span>
-                comment: {{ comment.comment_body }} said on {{ comment.comment_date }} by: {{ comment.comment_user_id }}
-            </span>
-                <br>
+            <div class="comment">
+               <p class="user-profile"> <img style="width: 50px" class= "profile-picture" src= {% static "images/co.png" %}> </p>
+               <div class="comment-container">
+                <p class= "user-name"> {{ comment.comment_user_id }} : </p>
+                  <p> {{ comment.comment_body }} </p>
+                  <p class="comment-info" > said on {{ comment.comment_date }} </p>
+              </div>
+            </div>
+            <div class="reply">
                 {% for reply in comment.comment_set.all %}
-                    <span>
-                        reply: {{ reply.comment_body }} said on {{ reply.comment_date }} by: {{ reply.comment_user_id }}
-                    </span>
-                  <br>
+                <div>
+                      <p class="user-profile"> <img style="width: 50px" class= "profile-picture" src= {% static "images/co.png" %}> </p>
+                      <div class="comment-container">
+                       <p class= "user-name"> {{ reply.comment_user_id }} : </p>
+                         <p> {{ reply.comment_body  }} </p>
+                         <p class="reply-info"> said on {{ reply.comment_date }} </p>
+                      </div>
+                </div>
+
                 {% endfor %}
-
-                <h2>Add Reply</h2>
-
                 {% if request.user.is_authenticated %}
-               <form method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ comment.id }}/addReply"> {% csrf_token %}
-                 <label for="{{ form.comment_body.id_for_label }}">Reply:</label>
+               <form class="addReply" method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ comment.id }}/addReply"> {% csrf_token %}
+                 <label for="{{ form.comment_body.id_for_label }}"></label>
                {{ form.comment_body }}
-                   <input type='submit' value='Reply'>
+                   <input type='submit' class="btn btn-primary" value='Reply'>
                </form>
-               {% else %}
-               <p>You must login to reply </p>
-               {% endif %}
 
-                <hr>
-                <br>
+               {% else %}
+               {% endif %}
+               </div>
           {% endif %}
         {% endfor %}
-    </div>
     {% endif %}
-
-    <br />
-
-    <h2>Add Comment</h2>
-
+  </div>
     {% if request.user.is_authenticated %}
-   <form method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/addComment"> {% csrf_token %}
-     <label for="{{ form.comment_body.id_for_label }}">Comment:</label>
+   <form class="addComment" method="POST" action="{{BASE_DIR}}/home/{{ postDetails.id }}/addComment"> {% csrf_token %}
+     <label for="{{ form.comment_body.id_for_label }}"></label>
    {{ form.comment_body }}
-       <input type='submit' value='Comment'>
+       <input type='submit' class="btn btn-primary" value='Comment'>
    </form>
    {% else %}
-   <p>You must login to comment </p>
    {% endif %}
 
-  <a href="/main/"> go back </a>
   {% endblock %}

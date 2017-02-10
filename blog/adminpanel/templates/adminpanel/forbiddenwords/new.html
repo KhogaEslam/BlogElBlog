@@ -1,11 +1,17 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <h1> Add new word </h1>
+{% extends 'adminpanel/Base/base.html' %}
+{% load staticfiles %}
+{% load bootstrap %}
+{% block content %}
+
+<div class="row">
+<div class="col-md-8">
+<h1> Word Add / Edit </h1>
+</div>
+</div>
     <form method = "POST">  {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit"> Save </button>
+        {{form|bootstrap}}
+        <button class="btn btn-primary btn-lg" type="submit"> Save </button>
     </form>
   </body>
 </html>
+{% endblock %}
