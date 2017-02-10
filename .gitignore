@@ -1,8 +1,22 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*.pyc
-*.pyc.orig
+settings.py
+*.py[cod]		
+*.pyc		
+*.pyc.orig		
+*.pyc.orig.orig		
+*.pyc.*		
+# C extensions		
+*.so		
+.idea/		
+/.idea/		
+blog/.idea/		
+/blog/.idea/		
+migrations/		
+blog/blog/settings.py		
+/blog/blog/settings.py
+
+
 # C extensions
 *.so
 
