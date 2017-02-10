@@ -1,3 +1,4 @@
+{% load i18n static %}
 <html>
   <head>
   </head>
@@ -6,7 +7,12 @@
       <form method="POST">{% csrf_token %}
           {{ form.as_p }}
           {{obj}}
-        <button type="submit" >sign up</button>
+        <button type="submit" >Save Changes</button>
       </form>
+    {% url 'admin_password_reset' as password_reset_url %}
+
+         <div class="password-reset-link">
+             <a href="{% url 'accounts:password_change' %}">change Password</a>
+         </div>
   </body>
 </html>

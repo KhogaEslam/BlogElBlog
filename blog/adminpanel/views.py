@@ -1,6 +1,9 @@
 from django.shortcuts import render , HttpResponseRedirect
 from django.views import generic
 from forms import RegisterForm , EditForm
+from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
+
 from main.models import word_list, category
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
@@ -17,10 +20,6 @@ class registerUser(generic.CreateView):
     success_url = reverse_lazy('adminpanel:adduser')
     template_name = "adminpanel/users/adduser.html"
 
-def allUsers(request):
-    allusers = User.objects.all()
-    context = {'usersData': allusers}
-    return render(request, 'adminpanel/users/allusers.html', context)
 def forbiddenWordsList(request):
     wordlist= word_list.objects.all()
     return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
@@ -46,14 +45,7 @@ def add_category(request):
     context = {'cat_form': form}
     return render(request, 'adminpanel/category_form.html', context)
 
-#def allUsers(request):
-#    allusers = User.objects.all()
-#    context = {'usersData': allusers}
-#   return render(request, 'adminpanel/users/allusers.html', context)
-#class allUsers(models.Model):
-#    model = User
-#    template_name = "#..."
-#    paginate_by = "#..."
+
 class allUsers(ListView):
     model = User
     template_name = "adminpanel/users/allusers.html"
@@ -87,12 +79,7 @@ def del_category(request, id):
     cat = category.objects.get(id=id)
     cat.delete()
     return HttpResponseRedirect('/adminpanel/all')
-#    model = Article
 
- #   def get_context_data(self, **kwargs):
-  #      context = super(ArticleDetailView, self).get_context_data(**kwargs)
-   #     context['now'] = timezone.now()
-#        return context
 
 class updateUser(UpdateView):
     model = User
@@ -100,18 +87,11 @@ class updateUser(UpdateView):
     template_name = "adminpanel/users/edituser.html"
     success_url = reverse_lazy('adminpanel:allusers')
 
-    #def get(self, request, **kwargs):
-        #self.object = User.objects.get(id=self.kwargs['pk'])
-      #  context = self.get_context_data(object=self.object)
-       # return self.render_to_response(context)
-
     def get_obj(self, **kwargs):
         user_id = self.kwargs['pk']
         obj = User.objects.filter(pk=user_id)
         return obj
 
-   # def get_queryset(self):
-   #     return reverse_lazy('allusers',kwargs={'pk': self.get_object().id})
 
 
 def deleteUser(request, user_id):

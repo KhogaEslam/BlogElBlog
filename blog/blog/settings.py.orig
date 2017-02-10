@@ -25,35 +25,27 @@ SECRET_KEY = '5t=d3yak&)-*omw-9-fq4h^tz2v-flz3cc@i=e1@()2u5de*@v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# EMAIL_HOST = 'smtp.mailgun.org'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'postmaster@sandboxa9f988908bd44b8892f62e305b8c7572.mailgun.org'
-# EMAIL_HOST_PASSWORD = '7edcbf92ebdd1f395dd01deee3d4d3f7'
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'anasahmed828@gmail.com'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ALLOWED_HOSTS = []
 
-
-if DEBUG:
-    EMAIL_HOST = 'localhost'
-    EMAIL_PORT = 1025
-    EMAIL_HOST_USER = ''
-    EMAIL_HOST_PASSWORD = ''
-    EMAIL_USE_TLS = False
-    DEFAULT_FROM_EMAIL = 'testing@example.com'
 
 # Application definition
 
 INSTALLED_APPS = [
     'main',
     'accounts',
+    'adminpanel',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+    'accounts',
+    'main',
     'adminpanel',
+=======
+>>>>>>> origin
 
 ]
 
