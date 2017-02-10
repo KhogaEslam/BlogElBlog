@@ -1,28 +1,25 @@
 <table border ='1'>
-		<th>user name</th>
-		<th colspan="5">actions</th>
-
-		{%  for user in users_data %}
-			<tr>
-				{% if not user.is_superuser %}
-					<td>{{user.username}}</td>
-				{% elif user.is_superuser %}
-					<td style="color: red">{{user.username}}</td>
-				{% endif %}
-				<td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/profile">Details</a></td>
-				<td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/change">Edit</a></td>
-				<td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/delete">Delete</a></td>
-				{% if not user.is_superuser %}
-					{% if user.is_active %}
-						<td><a href="{{BASE_DIR}}/adminpanel/users/block/{{user.id}}">Block</a></td>
-					{% elif not user.is_active %}
-						<td><a href="{{BASE_DIR}}/adminpanel/users/unblock/{{user.id}}">Unblock</a></td>
-					{% endif %}
-				{% elif user.is_superuser %}
-					<td>Adminstrator</td>
-				{% endif %}
-			</tr>
-
-		{%  endfor  %}
-
+    <th>user name</th>
+    <th colspan="5">actions</th>
+    {% for user in users_data %}
+        <tr>
+            {% if not user.is_superuser %}
+                <td>{{user.username}}</td>
+            {% elif user.is_superuser %}
+                <td style="color: red">{{user.username}}</td>
+            {% endif %}
+            <td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/profile">Details</a></td>
+            <td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/change">Edit</a></td>
+            <td><a href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/delete">Delete</a></td>
+            {% if not user.is_superuser %}
+                {% if user.is_active %}
+                    <td><a href="{{BASE_DIR}}/adminpanel/users/block/{{user.id}}">Block</a></td>
+                {% elif not user.is_active %}
+                    <td><a href="{{BASE_DIR}}/adminpanel/users/unblock/{{user.id}}">Unblock</a></td>
+                {% endif %}
+            {% elif user.is_superuser %}
+                <td>Adminstrator</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
 </table>

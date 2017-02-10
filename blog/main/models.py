@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -23,6 +22,8 @@ class post(models.Model):
     post_img=models.ImageField(upload_to="./static/media/", blank=True)
     post_date=models.DateField(auto_now_add = True)
     post_cat_id=models.ForeignKey(category)
+    def __str__ (self):
+        return self.post_title
 
     def __str__(self):
         return self.post_title
@@ -34,6 +35,8 @@ class comment(models.Model):
     comment_user_id=models.ForeignKey(User)
     reply_comment_id = models.ForeignKey('self', null=True, blank=True)
     comment_post_id = models.ForeignKey(post)
+    def __str__ (self):
+        return self.comment_body
 
     def __str__(self):
         return self.comment_body
@@ -42,7 +45,12 @@ class comment(models.Model):
 class word_list(models.Model):
     word_list = models.CharField(max_length=50)
 
+    def __str__ (self):
+        return self.word_list
+
+
     def __str__(self):
         return self.word_list
 #    cat_id = models.ForeignKey(category)
 #    user_id = models.ForeignKey(User)
+

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 import random
 import re
 # Create your views here.
-class ProfanitiesFilter(object):
+class OffensiveWordsFilter(object):
     def __init__(self, filterlist, ignore_case=True, replacements="$@%-?!", complete=True, inside_words=False):
         self.badwords = filterlist
         self.ignore_case = ignore_case
@@ -41,15 +41,18 @@ class ProfanitiesFilter(object):
 
         return r.sub(self.__replacer, text)
 
-def censor(sentence):
-    badwords = word_list.objects.values_list('word_list', flat=True) # consider making this an argument too
-    f = ProfanitiesFilter(badwords, replacements="*")
-    #print f.clean(sentence)
-    f.inside_words = True
-    #print f.clean(sentence)
-    f.complete = False
-    #print f.clean(sentence)
-    return f.clean(sentence) # return rather than print
+def wordsCleaner(sentence):
+    badwords = word_list.objects.values_list('word_list', flat=True)
+    if badwords.exists():
+        owf = OffensiveWordsFilter(badwords, replacements="*")
+        #print f.clean(sentence)
+        owf.inside_words = True
+        #print f.clean(sentence)
+        owf.complete = False
+        #print f.clean(sentence)
+        return owf.clean(sentence)
+    else:
+        return sentence
 
 def homePosts (request):
     posts = post.objects.all().order_by('-post_date')
@@ -91,7 +94,7 @@ def subscribe(request, cat_id):
     current_user = request.user
     subscribed_cats = category.objects.get(id = cat_id)
     subscribed_cats.user.add(current_user)
-    #confirmSubscription(current_user.email,subscribed_cats.cat_title)
+    confirmSubscription(current_user.email,subscribed_cats.cat_title)
     return HttpResponseRedirect('/home')
 
 def unsubscribe(request, cat_id):
@@ -122,7 +125,7 @@ def addComment(request, postID):
 	    comment = CommentForm(request.POST, request.FILES)
 	    if comment.is_valid():
 		    comment = comment.save(commit=False)
-            comment.comment_body = censor(comment.comment_body)
+            comment.comment_body = wordsCleaner(comment.comment_body)
             comment.post = post.objects.get(id = postID)
             #comment.User = User.objects.get(id = request.user.id)
             comment.comment_user_id_id = request.user.id
@@ -137,7 +140,7 @@ def addReply(request, postID, commentID):
 	    reply = CommentForm(request.POST, request.FILES)
 	    if reply.is_valid():
 		    reply = reply.save(commit=False)
-            reply.comment_body = censor(reply.comment_body)
+            reply.comment_body = wordsCleaner(reply.comment_body)
             reply.post = post.objects.get(id = postID)
             #comment.User = User.objects.get(id = request.user.id)
             reply.comment_user_id_id = request.user.id
