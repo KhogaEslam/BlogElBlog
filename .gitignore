@@ -6,9 +6,12 @@ __pycache__/
 # C extensions
 *.so
 .idea/
+/.idea/
 blog/.idea/
+/blog/.idea/
 migrations/
-settings.py
+blog/blog/settings.py
+/blog/blog/settings.py
 # Distribution / packaging
 bin/
 build/
