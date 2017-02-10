@@ -58,7 +58,7 @@ def homePosts (request):
     posts = post.objects.all().order_by('-post_date')
     categories = category.objects.all()
 
-    paginator = Paginator(posts , 1 )
+    paginator = Paginator(posts , 5 )
     page = request.GET.get('page')
     try:
         posts_data = paginator.page(page)
