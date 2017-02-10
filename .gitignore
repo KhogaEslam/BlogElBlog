@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *.pyc
 *.pyc.orig
+*.pyc.orig.orig
+*.pyc.*
 # C extensions
 *.so
 .idea/
