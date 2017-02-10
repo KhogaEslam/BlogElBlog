@@ -3,7 +3,10 @@
     <th>category_title</th>
     <th colspan="4">Actions</th>
   </thead>
+<<<<<<< HEAD
   <tbody>
+=======
+>>>>>>> 4baa29e5f8713fee4867a9f886dcae5e87ddb47c
     {% for cat in allCategory %}
       <tr>
         <td>{{ cat.cat_title }}</td>

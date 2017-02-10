@@ -2,7 +2,17 @@ from django.http import Http404
 from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
+<<<<<<< HEAD
 from forms import RegisterForm , EditForm
+=======
+from django.views.generic import ListView ,UpdateView
+from forms import RegisterForm , EditForm
+from django.db import models
+from django.http import HttpResponse, HttpResponseRedirect
+from forms import category_form
+from forms import post_form
+from main.models import post
+>>>>>>> 276ec6d52e25f1b331ecb349f7b581c87ee19a4d
 from main.models import word_list, category
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
@@ -117,7 +127,6 @@ def delete_post(request, post_id):
     else:
         return redirect('/accounts/login/')
 #from braces import views
-# Create your views here.
 def showCategory(request):
     if checkAdmin(request):
         allCategory = category.objects.all()
@@ -125,6 +134,12 @@ def showCategory(request):
         return render(request, 'adminpanel/category/index.html', context)
     else:
         return redirect('/accounts/login/')
+# category details
+def category_posts(request,id):
+    cat_post = post.objects.filter(post_cat_id_id=id)
+    context = {'catposts':cat_post}
+    return render (request , 'adminpanel/category/catposts.html' , context)
+    #return HttpResponseRedirect('/adminpanel/category')
 
 
 # add
@@ -135,10 +150,10 @@ def add_category(request):
             form = category_form(request.POST)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('/adminpanal/all')
+            	return HttpResponseRedirect('/adminpanel/category')
 
-        context = {'cat_form': form}
-        return render(request, 'adminpanel/category_form.html', context)
+    context = {'category_form': form}
+    return render(request, 'adminpanel/category/category_form.html', context)
     else:
         return redirect('/accounts/login/')
 
@@ -188,10 +203,18 @@ def edit_category(request, id):
             form = category_form(request.POST, instance=cat)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect('/adminpanel/all')
+            	return HttpResponseRedirect('/adminpanel/category')
 
+<<<<<<< HEAD
         context = {'cat_form': form}
         return render(request, 'adminpanel/category_form.html', context)
+
+=======
+    context = {'category_form': form}
+    return render(request, 'adminpanel/category/category_form.html', context)
+    else:
+        return redirect('/accounts/login/')
+>>>>>>> 276ec6d52e25f1b331ecb349f7b581c87ee19a4d
 
 
 
@@ -200,7 +223,13 @@ def del_category(request, id):
     if checkAdmin(request):
         cat = category.objects.get(id=id)
         cat.delete()
+<<<<<<< HEAD
         return HttpResponseRedirect('/adminpanel/all')
+=======
+    	return HttpResponseRedirect('/adminpanel/category')
+    else:
+        return redirect('/accounts/login/')
+>>>>>>> 276ec6d52e25f1b331ecb349f7b581c87ee19a4d
 #    model = Article
 
  #   def get_context_data(self, **kwargs):
