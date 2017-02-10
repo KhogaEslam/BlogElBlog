@@ -3,6 +3,7 @@ __pycache__/
 settings.py
 *.py[cod]		
 *.pyc		
+*.orig
 *.pyc.orig		
 *.pyc.orig.orig		
 *.pyc.*		
