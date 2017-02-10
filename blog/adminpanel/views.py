@@ -1,16 +1,8 @@
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect
-from django.shortcuts import render , redirect
 from django.http import Http404
 from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from forms import RegisterForm , EditForm
-from django.db import models
-from django.http import HttpResponse, HttpResponseRedirect
-from forms import category_form
-from forms import post_form
-from main.models import post
 from main.models import word_list, category
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
@@ -20,6 +12,7 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView ,UpdateView
 from django.views.generic import TemplateView
 
+from forms import category_form
 
 from main.models import post
 # Create your views here.
@@ -124,6 +117,7 @@ def delete_post(request, post_id):
     else:
         return redirect('/accounts/login/')
 #from braces import views
+# Create your views here.
 def showCategory(request):
     if checkAdmin(request):
         allCategory = category.objects.all()
@@ -131,12 +125,6 @@ def showCategory(request):
         return render(request, 'adminpanel/category/index.html', context)
     else:
         return redirect('/accounts/login/')
-# category details
-def category_posts(request,id):
-    cat_post = post.objects.filter(post_cat_id_id=id)
-    context = {'catposts':cat_post}
-    return render (request , 'adminpanel/category/catposts.html' , context)
-    #return HttpResponseRedirect('/adminpanel/category')
 
 
 # add
@@ -147,10 +135,10 @@ def add_category(request):
             form = category_form(request.POST)
             if form.is_valid():
                 form.save()
-            	return HttpResponseRedirect('/adminpanel/category')
+                return HttpResponseRedirect('/adminpanal/all')
 
-    context = {'category_form': form}
-    return render(request, 'adminpanel/category/category_form.html', context)
+        context = {'cat_form': form}
+        return render(request, 'adminpanel/category_form.html', context)
     else:
         return redirect('/accounts/login/')
 
@@ -200,12 +188,10 @@ def edit_category(request, id):
             form = category_form(request.POST, instance=cat)
             if form.is_valid():
                 form.save()
-            	return HttpResponseRedirect('/adminpanel/category')
+                return HttpResponseRedirect('/adminpanel/all')
 
-    context = {'category_form': form}
-    return render(request, 'adminpanel/category/category_form.html', context)
-    else:
-        return redirect('/accounts/login/')
+        context = {'cat_form': form}
+        return render(request, 'adminpanel/category_form.html', context)
 
 
 
@@ -214,9 +200,7 @@ def del_category(request, id):
     if checkAdmin(request):
         cat = category.objects.get(id=id)
         cat.delete()
-    	return HttpResponseRedirect('/adminpanel/category')
-    else:
-        return redirect('/accounts/login/')
+        return HttpResponseRedirect('/adminpanel/all')
 #    model = Article
 
  #   def get_context_data(self, **kwargs):
@@ -254,9 +238,8 @@ def deleteUser(request, user_id):
     if checkAdmin(request):
         user = User.objects.get(id=user_id)
         user.delete()
-        return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
+
+    return HttpResponseRedirect('/adminpanel/users/all')
 
 def blockUser(request, user_id):
     if checkAdmin(request):
@@ -264,8 +247,6 @@ def blockUser(request, user_id):
         user.is_active = False
         user.save()
         return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
 
 def unblockUser(request, user_id):
     if checkAdmin(request):
@@ -273,15 +254,11 @@ def unblockUser(request, user_id):
         user.is_active = True
         user.save()
         return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
     
 def forbiddenWordsList(request):
     if checkAdmin(request):
         wordlist= word_list.objects.all()
         return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
-    else:
-        return redirect('/accounts/login/')
 
 class ForbiddenWord_delete(generic.DeleteView):
     def dispatch(self, request, *args, **kwargs):

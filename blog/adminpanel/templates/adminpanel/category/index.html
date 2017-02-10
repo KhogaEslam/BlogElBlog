@@ -7,11 +7,10 @@
     {% for cat in allCategory %}
       <tr>
         <td>{{ cat.cat_title }}</td>
-        <td><a href="category/{{cat.id}}/posts">details</a></td>
-        <td><a href="category/{{cat.id}}/edit">edit</a></td>
-        <td><a href="category/{{cat.id}}/delete">delete</a></td>
+        <td><a href="{{cat.id}}/details">details</td>
+        <td><a href="category/{{cat.id}}/edit">edit</td>
+        <td><a href="category/{{cat.id}}/del">delete</td>
       </tr>
     {% endfor %}
     </tbody>
 </table>
-<a href="adminpanel/category/add">Add Category</a>
