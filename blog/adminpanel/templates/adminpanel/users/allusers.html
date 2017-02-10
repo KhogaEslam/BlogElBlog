@@ -19,7 +19,7 @@ $(document).ready(function(){
 <table id="datatable" class="table table-striped table-bordered">
 <th>user name</th>
 <th colspan="5">actions</th>
-
+    {% for user in users_data %}
 {% for user in users_data %}
 {% if not user.is_superuser %}
 <tr>
@@ -50,6 +50,7 @@ $(document).ready(function(){
 {% elif user.is_superuser %}
 <td>Adminstrator</td>
 {% endif %}
+            {% endif %}
 </tr>
 
 {% endfor %}

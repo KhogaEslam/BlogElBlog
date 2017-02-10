@@ -1,4 +1,5 @@
 from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect, get_object_or_404, get_list_or_404
+from django.http import Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from forms import RegisterForm , EditForm
@@ -18,7 +19,7 @@ from main.models import post
 from forms import post_form
 
 def checkAdmin(request):
-    print "super user ?", request.user.is_superuser
+#    print "super user ?", request.user.is_superuser
     if not request.user.is_superuser:
         return redirect('/accounts/login/')
 
@@ -27,6 +28,8 @@ def admindashboard(request):
     checkAdmin(request)
     if request.user.is_superuser:
         return render(request, 'adminpanel/Base/fixed_sidebar.html')
+    else:
+        return redirect('/accounts/login/')
 
 # add post
 def add_post(request):
@@ -43,6 +46,12 @@ def add_post(request):
     return render(request, 'adminpanel/posts/post_form.html',context)
 
 class registerUser(generic.CreateView):
+#    def dispatch(self, request, *args, **kwargs):
+#        if checkAdmin(request):
+#            print "Hello!"
+#            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#        else:
+#            return redirect('/accounts/login/')
     form_class = forms.RegisterForm
     success_url = reverse_lazy('adminpanel:adduser')
     template_name = "adminpanel/users/adduser.html"
@@ -127,6 +136,12 @@ from django.utils import timezone
 
 
 class updateUser(UpdateView):
+#    def dispatch(self, request, *args, **kwargs):
+#        if checkAdmin(request):
+#            print "Hello!"
+#            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#        else:
+#            return redirect('/accounts/login/')
     model = User
     fields =['username','email','is_superuser','is_active']
     template_name = "adminpanel/users/edituser.html"
@@ -168,17 +183,35 @@ def forbiddenWordsList(request):
     return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
 
 class ForbiddenWord_delete(generic.DeleteView):
+#    def dispatch(self, request, *args, **kwargs):
+#        if checkAdmin(request):
+#            print "Hello!"
+#            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#        else:
+#            return redirect('/accounts/login/')
     model = word_list
     success_url = reverse_lazy('adminpanel:listWords')
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
 class ForbiddenWord_create(generic.CreateView):
+#    def dispatch(self, request, *args, **kwargs):
+#        if checkAdmin(request):
+#            print "Hello!"
+#            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#        else:
+#            return redirect('/accounts/login/')
     form_class = forms.Forbidden_words_form
     success_url = reverse_lazy('adminpanel:listWords')
     template_name = "adminpanel/forbiddenwords/new.html"
 
 class ForbiddenWord_edit(generic.UpdateView):
+#    def dispatch(self, request, *args, **kwargs):
+#        if checkAdmin(request):
+#            print "Hello!"
+#            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#        else:
+#            return redirect('/accounts/login/')
     model = word_list
     fields = ["word_list"]
     template_name = "adminpanel/forbiddenwords/new.html"
