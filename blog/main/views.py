@@ -150,3 +150,8 @@ def addReply(request, postID, commentID):
             reply.save()
             return redirect(request.path)
     return HttpResponseRedirect("/main/"+postID+"/post")
+
+def deleteComment(request, postID, commentID):
+    comment.objects.filter(reply_comment_id=commentID).delete()
+    comment.objects.filter(id=commentID).delete()
+    return HttpResponseRedirect("/main/"+postID+"/post")

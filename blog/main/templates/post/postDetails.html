@@ -17,11 +17,17 @@
             <span>
                 comment: {{ comment.comment_body }} said on {{ comment.comment_date }} by: {{ comment.comment_user_id }}
             </span>
+              {% ifequal request.user.id comment.comment_user_id.id %}
+                    <a href="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ comment.id }}/deleteComment">delete</a>
+                {% endifequal %}
                 <br>
                 {% for reply in comment.comment_set.all %}
                     <span>
                         reply: {{ reply.comment_body }} said on {{ reply.comment_date }} by: {{ reply.comment_user_id }}
                     </span>
+                    {% ifequal request.user.id reply.comment_user_id.id %}
+                        <a href="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ reply.id }}/deleteComment">delete</a>
+                    {% endifequal %}
                   <br>
                 {% endfor %}
 

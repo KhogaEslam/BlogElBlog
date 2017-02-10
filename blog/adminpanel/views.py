@@ -1,23 +1,27 @@
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect
-from django.shortcuts import render , redirect
+from django.http import Http404
+from django.shortcuts import render , HttpResponseRedirect, HttpResponse, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
+from forms import RegisterForm , EditForm
+from main.models import word_list, category
+from django.views import generic
+from django.core.urlresolvers import reverse_lazy
+from . import forms
+from django.db import models
+from django.contrib.auth.models import User
 from django.views.generic import ListView ,UpdateView
+from django.views.generic import TemplateView
 
 from forms import category_form
-from forms import post_form
+
 from main.models import post
-from main.models import word_list, category
-from . import forms
-
-
+# Create your views here.
+from forms import post_form
 
 def checkAdmin(request):
     isSuper = False
     if request.user.is_superuser:
         isSuper = True
-        print isSuper
     print isSuper
     return isSuper
 
@@ -43,6 +47,12 @@ def add_post(request):
         return redirect('/accounts/login/')
 
 class registerUser(generic.CreateView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     form_class = forms.RegisterForm
     success_url = reverse_lazy('adminpanel:adduser')
     template_name = "adminpanel/users/adduser.html"
@@ -137,10 +147,22 @@ def add_category(request):
 #    context = {'usersData': allusers}
 #   return render(request, 'adminpanel/users/allusers.html', context)
 #class allUsers(models.Model):
+# def dispatch(self, request, *args, **kwargs):
+#     if checkAdmin(request):
+#         print "Hello!"
+#         return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+#     else:
+#         return redirect('/accounts/login/')
 #    model = User
 #    template_name = "#..."
 #    paginate_by = "#..."
 class allUsers(ListView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     model = User
     template_name = "adminpanel/users/allusers.html"
     context_object_name = 'users_data'
@@ -152,6 +174,9 @@ def userProfile (request , user_id):
         return render(request , 'adminpanel/users/userProfile.html' , context)
     else:
         return redirect('/accounts/login/')
+
+from django.views.generic.detail import DetailView
+from django.utils import timezone
 
 
 # edit
@@ -167,8 +192,7 @@ def edit_category(request, id):
 
         context = {'cat_form': form}
         return render(request, 'adminpanel/category_form.html', context)
-    else:
-        return redirect('/accounts/login/')
+
 
 
 # delete
@@ -177,8 +201,6 @@ def del_category(request, id):
         cat = category.objects.get(id=id)
         cat.delete()
         return HttpResponseRedirect('/adminpanel/all')
-    else:
-        return redirect('/accounts/login/')
 #    model = Article
 
  #   def get_context_data(self, **kwargs):
@@ -187,6 +209,12 @@ def del_category(request, id):
 #        return context
 
 class updateUser(UpdateView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     model = User
     fields =['is_superuser','is_active']
     template_name = "adminpanel/users/edituser.html"
@@ -210,9 +238,8 @@ def deleteUser(request, user_id):
     if checkAdmin(request):
         user = User.objects.get(id=user_id)
         user.delete()
-        return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
+
+    return HttpResponseRedirect('/adminpanel/users/all')
 
 def blockUser(request, user_id):
     if checkAdmin(request):
@@ -220,8 +247,6 @@ def blockUser(request, user_id):
         user.is_active = False
         user.save()
         return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
 
 def unblockUser(request, user_id):
     if checkAdmin(request):
@@ -229,28 +254,42 @@ def unblockUser(request, user_id):
         user.is_active = True
         user.save()
         return HttpResponseRedirect('/adminpanel/users/all')
-    else:
-        return redirect('/accounts/login/')
     
 def forbiddenWordsList(request):
     if checkAdmin(request):
         wordlist= word_list.objects.all()
         return render(request, 'adminpanel/forbiddenwords/index.html', {'wordlist': wordlist} )
-    else:
-        return redirect('/accounts/login/')
 
 class ForbiddenWord_delete(generic.DeleteView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     model = word_list
     success_url = reverse_lazy('adminpanel:listWords')
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
 class ForbiddenWord_create(generic.CreateView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     form_class = forms.Forbidden_words_form
     success_url = reverse_lazy('adminpanel:listWords')
     template_name = "adminpanel/forbiddenwords/new.html"
 
 class ForbiddenWord_edit(generic.UpdateView):
+    def dispatch(self, request, *args, **kwargs):
+        if checkAdmin(request):
+            print "Hello!"
+            return super(allUsers, self).dispatch(request, *args, **kwargs)  # Don't forget this
+        else:
+            return redirect('/accounts/login/')
     model = word_list
     fields = ["word_list"]
     template_name = "adminpanel/forbiddenwords/new.html"
