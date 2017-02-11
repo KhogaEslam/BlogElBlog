@@ -1,1 +1,5 @@
-blog/static/css* linguist-vendored
+static/* linguist-vendored
+blog/static/* linguist-vendored
+*.css linguist-vendored=false
+*.js linguist-vendored=false
+*.html linguist-vendored=false
