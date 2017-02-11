@@ -35,7 +35,7 @@ $(document).ready(function(){
   {% if not post.feature_status %}
       <td><a class="btn btn-success" href="{{BASE_DIR}}/adminpanel/posts/feature/{{post.id}}">Feature</a></td>
   {% elif  post.feature_status %}
-      <td><a class="btn btn-failure" href="{{BASE_DIR}}/adminpanel/posts/unfeature/{{post.id}}">UnFeature</a></td>
+      <td><a class="btn btn-danger" href="{{BASE_DIR}}/adminpanel/posts/unfeature/{{post.id}}">UnFeature</a></td>
   {% endif %}
 </tr>
 

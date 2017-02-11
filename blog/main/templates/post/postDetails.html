@@ -29,6 +29,9 @@
                 <p class= "user-name"> {{ comment.comment_user_id }} : </p>
                   <p> {{ comment.comment_body }} </p>
                   <p class="comment-info" > said on {{ comment.comment_date }} </p>
+                    {% ifequal request.user.id comment.comment_user_id.id %}
+                        <a href="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ comment.id }}/deleteComment">delete</a>
+                    {% endifequal %}
               </div>
             </div>
             <div class="reply">
@@ -39,6 +42,9 @@
                        <p class= "user-name"> {{ reply.comment_user_id }} : </p>
                          <p> {{ reply.comment_body  }} </p>
                          <p class="reply-info"> said on {{ reply.comment_date }} </p>
+                            {% ifequal request.user.id reply.comment_user_id.id %}
+                                <a href="{{BASE_DIR}}/home/{{ postDetails.id }}/{{ reply.id }}/deleteComment">delete</a>
+                            {% endifequal %}
                       </div>
                 </div>
 

@@ -20,6 +20,11 @@
       <form method="POST"> {% csrf_token %}
           {{ form|bootstrap }}
         <div class="form-group">
+                         <div class="password-reset-link">
+       <a href="{% url 'accounts:password_reset' %}">Forget Password?</a>
+
+   </div>
+                             <br>
           <button class="btn btn-primary btn-lg" type="submit" >Submit</button>
         </div>
       </form>

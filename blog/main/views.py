@@ -78,12 +78,16 @@ import smtplib
 
 from email.mime.text import MIMEText
 
-def confirmSubscription(userEmail, Category):
-
-    msg = MIMEText('Hello, you have subscribed to new category')
-    msg['Subject'] = "Hello, you have subscribed to category: "+Category
+def confirmSubscription(current_user, Category):
+    fName='Beloved'
+    lName='Member'
+    lambda fName: current_user.first_name if current_user.first_name != None else 'Beloved'
+    lambda lName: current_user.last_name if current_user.last_name  != None else 'Member'
+    textMsg = "Dear "+fName+" "+lName+" ("+current_user.username+"): you have subscribed to new category "
+    msg = MIMEText(textMsg+Category)
+    msg['Subject'] = "Hello"+current_user.first_name+" "+current_user.last_name+" ("+current_user.username+"), we heve news for you"
     msg['From'] = "khogaeslam@gmail.com"
-    msg['To'] = userEmail
+    msg['To'] = current_user.email
 
     s = smtplib.SMTP('smtp.mailgun.org', 587)
 
@@ -95,7 +99,7 @@ def subscribe(request, cat_id):
     current_user = request.user
     subscribed_cats = category.objects.get(id = cat_id)
     subscribed_cats.user.add(current_user)
-    confirmSubscription(current_user.email,subscribed_cats.cat_title)
+    confirmSubscription(current_user,subscribed_cats.cat_title)
     return HttpResponseRedirect('/home')
 
 def unsubscribe(request, cat_id):

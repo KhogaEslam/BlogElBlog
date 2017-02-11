@@ -28,11 +28,16 @@ $(document).ready(function(){
 <tr style="color: #fff;background-color: red">
 <td >{{user.username}}</td>
 {% endif %}
-
+{% if request.user == user or not user.is_superuser %}
 <td><a class="btn btn-primary" href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/change">
     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit
   </a>
 </td>
+
+    {% else %}
+    <td>
+</td>
+    {% endif %}
 <td>
   {% if not user.is_superuser %}
   <a class="btn btn-danger" href="{{BASE_DIR}}/adminpanel/users/{{user.id}}/delete">
