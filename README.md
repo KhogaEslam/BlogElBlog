@@ -15,20 +15,20 @@ Anas Ahmed @anas-marrey
 Eslam Khoga @KhogaEslam 
 
 
-** Home Page **
+**Home Page**
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/Home.png)
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/Home2.png)
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/Home3.png)
 
-** Comments And Replies **
+**Comments And Replies**
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/Comment1.png)
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/Comment2.png)
 
-** Admin Panel **
+**Admin Panel**
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/AdminPanel1.png)
 
@@ -39,3 +39,4 @@ Eslam Khoga @KhogaEslam
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/AdminPanel4.png)
 
 ![alt tag](https://github.com/KhogaEslam/BlogElBlog/blob/master/Screen_Shoots/AdminPanel5.png)
+
