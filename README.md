@@ -2,17 +2,29 @@
 ## Blog Created With Python Django
 For Python Programming Course - ITI (Information Technology Institute) - Alexandria
 
+**Supervised By:**
+Eng. Mohamed Ramadan 
+@mohamed-ramdan
+
+Eng. Ahmed Abd El Ftah
+@Te7a-Houdini
+
 **Team Members:** 
 
-Mai Mohammed @MaiOsman 
+Mai Mohammed 
+@MaiOsman 
 
-Salma Gaber @salmaGaber 
+Salma Gaber 
+@salmaGaber 
 
-Mohamed Magdy @muhammedmagdi 
+Mohamed Magdy 
+@muhammedmagdi 
 
-Anas Ahmed @anas-marrey 
+Anas Ahmed 
+@anas-marrey 
 
-Eslam Khoga @KhogaEslam 
+Eslam Khoga 
+@KhogaEslam 
 
 
 **Home Page**
